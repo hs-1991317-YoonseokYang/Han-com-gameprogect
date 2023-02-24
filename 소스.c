@@ -1448,51 +1448,36 @@ START:
 
 	scr_clear();
 	while (1) {
+		frame_count++;
 
 		scr_clear();
-		frame_count++;
 		drawbox2(0, CYAN1);
 
 		jet_ctrl();
 
-
 		of.oldx = of.x;
 		of.oldy = of.y;//이게 없으니까 유도탄이 동작을 안 함
 
-		i_o_check();
-		/*if (score < 100 && frame_count < 18000) {
-			enemy_jet_check();
-		}
-		else {
-			o_bos_check();
-		}*///이거 지워도 되는거 아님?
-		//eb_o_check();
+
 		enemy_bullet_move();
 		eb_o_check();
 		jet_bulletMove();
 		i_o_check();
-		item_ctrl();//두 ctrl은 안에서 프레임을 설정한다. 
-		//if (score < 100 && frame_count < 18000)
-			//ourBullet_enemy_check();
-
+		item_ctrl();
+		show_info();
 
 		if (score < BOSS_SCORE && frame_count < 18000) {
 			enemy_ctrl();
 			ourBullet_enemy_check();
 			enemy_jet_check();
 		}
-		//else if (score >= 100 || frame_count >= 18000)
-			//ob_bos_check();
-		//item_ctrl();//두 ctrl은 안에서 프레임을 설정한다. 
-		//i_o_check();
-
-		if (score >= BOSS_SCORE || frame_count >= 18000) {
+		else if (score >= BOSS_SCORE || frame_count >= 18000) {
 			if (bos_i == 0) {
 				boss_come_on_stage();
 				chase = 3;//유도탄 추적 관리/////////////////////////////////////////////
 				bos_i = 1;
 			}
-			//if (frame_count % enemy1_frame == 0)
+
 			boss_ctrl();
 			o_bos_check();
 			ob_bos_check();
@@ -1501,15 +1486,12 @@ START:
 				scr_release();
 				ending();
 			}
-			//ob_bos_check();
 		}
-		show_info();
+
 		if (of.life <= 0 || frame_count >= 30000) {
 			lose();
 			goto START;
 		}
-
-		//Sleep(7.5);
 		scr_switch();
 	}
 }
